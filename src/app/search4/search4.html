@@ -1,0 +1,338 @@
+<main id="main-content" class="max-w-5xl mx-auto px-6 py-12">
+        
+        <section id="search-header" class="mb-12">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-900 mb-3">Find Your Legal Professional</h1>
+                <p class="text-lg text-gray-600">Connect with certified bailiffs and lawyers across Morocco</p>
+            </div>
+
+            <div id="primary-search-bar" class="max-w-3xl mx-auto">
+                <div class="relative">
+                    <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
+                        <i class="text-xl" data-fa-i2svg=""><svg class="svg-inline--fa fa-magnifying-glass" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search a bailiff or lawyer by name, city, or specialty" class="w-full pl-16 pr-16 py-5 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all shadow-sm">
+                    <button id="clearBtn" class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                        <i class="text-xl" data-fa-i2svg=""><svg class="svg-inline--fa fa-xmark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path></svg></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="empty-state-guidance" class="mb-12">
+            <div class="bg-white rounded-3xl p-12 shadow-sm border border-gray-100 text-center">
+                <div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="text-6xl text-primary" data-fa-i2svg=""><svg class="svg-inline--fa fa-magnifying-glass" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg></i>
+                </div>
+                
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Find a legal professional in a few seconds</h2>
+                
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Start by typing a name, a city, or a service such as <span class="font-semibold text-primary">'Constat'</span> or <span class="font-semibold text-primary">'Notification'</span>.
+                </p>
+            </div>
+        </section>
+
+        <section id="quick-suggestions" class="mb-12">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Popular Searches</h3>
+                <p class="text-gray-600">Quick shortcuts to help you get started</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="group px-8 py-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all shadow-sm flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <i class="text-primary text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg></i>
+                    </div>
+                    <span class="text-base font-semibold text-gray-700 group-hover:text-primary">Bailiffs near me</span>
+                </button>
+
+                <button class="group px-8 py-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all shadow-sm flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <i class="text-primary text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-file-signature" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-signature" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V428.7c-2.7 1.1-5.4 2-8.2 2.7l-60.1 15c-3 .7-6 1.2-9 1.4c-.9 .1-1.8 .2-2.7 .2H240c-6.1 0-11.6-3.4-14.3-8.8l-8.8-17.7c-1.7-3.4-5.1-5.5-8.8-5.5s-7.2 2.1-8.8 5.5l-8.8 17.7c-2.9 5.9-9.2 9.4-15.7 8.8s-12.1-5.1-13.9-11.3L144 381l-9.8 32.8c-6.1 20.3-24.8 34.2-46 34.2H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h8.2c7.1 0 13.3-4.6 15.3-11.4l14.9-49.5c3.4-11.3 13.8-19.1 25.6-19.1s22.2 7.8 25.6 19.1l11.6 38.6c7.4-6.2 16.8-9.7 26.8-9.7c15.9 0 30.4 9 37.5 23.2l4.4 8.8h8.9c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7L384 203.6V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM549.8 139.7c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM311.9 321c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L512.1 262.7l-71-71L311.9 321z"></path></svg></i>
+                    </div>
+                    <span class="text-base font-semibold text-gray-700 group-hover:text-primary">Constat services</span>
+                </button>
+
+                <button class="group px-8 py-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all shadow-sm flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <i class="text-primary text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-bell" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"></path></svg></i>
+                    </div>
+                    <span class="text-base font-semibold text-gray-700 group-hover:text-primary">Notification of documents</span>
+                </button>
+
+                <button class="group px-8 py-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all shadow-sm flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <i class="text-primary text-lg" data-fa-i2svg=""><svg class="svg-inline--fa fa-language" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="language" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H256h48 16H576c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H320 304 256 64c-35.3 0-64-28.7-64-64V128zm320 0V384H576V128H320zM178.3 175.9c-3.2-7.2-10.4-11.9-18.3-11.9s-15.1 4.7-18.3 11.9l-64 144c-4.5 10.1 .1 21.9 10.2 26.4s21.9-.1 26.4-10.2l8.9-20.1h73.6l8.9 20.1c4.5 10.1 16.3 14.6 26.4 10.2s14.6-16.3 10.2-26.4l-64-144zM160 233.2L179 276H141l19-42.8zM448 164c11 0 20 9 20 20v4h44 16c11 0 20 9 20 20s-9 20-20 20h-2l-1.6 4.5c-8.9 24.4-22.4 46.6-39.6 65.4c.9 .6 1.8 1.1 2.7 1.6l18.9 11.3c9.5 5.7 12.5 18 6.9 27.4s-18 12.5-27.4 6.9l-18.9-11.3c-4.5-2.7-8.8-5.5-13.1-8.5c-10.6 7.5-21.9 14-34 19.4l-3.6 1.6c-10.1 4.5-21.9-.1-26.4-10.2s.1-21.9 10.2-26.4l3.6-1.6c6.4-2.9 12.6-6.1 18.5-9.8l-12.2-12.2c-7.8-7.8-7.8-20.5 0-28.3s20.5-7.8 28.3 0l14.6 14.6 .5 .5c12.4-13.1 22.5-28.3 29.8-45H448 376c-11 0-20-9-20-20s9-20 20-20h52v-4c0-11 9-20 20-20z"></path></svg></i>
+                    </div>
+                    <span class="text-base font-semibold text-gray-700 group-hover:text-primary">Arabic-speaking professionals</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="advanced-filters" class="mb-12">
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <button id="filterToggle" class="w-full flex items-center justify-between group">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <i class="text-primary text-xl" data-fa-i2svg=""><svg class="svg-inline--fa fa-sliders" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sliders" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"></path></svg></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-xl font-bold text-gray-900">Advanced Filters</h3>
+                            <p class="text-sm text-gray-500 mt-1">Optional – refine your search anytime</p>
+                        </div>
+                    </div>
+                    <i class="text-gray-400 text-xl group-hover:text-primary transition-colors" id="filterIcon" data-fa-i2svg=""><svg class="svg-inline--fa fa-chevron-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg></i>
+                </button>
+
+                <div id="filterContent" class="hidden mt-8 pt-8 border-t border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Professional Type</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary transition-colors">
+                                <option>All Professionals</option>
+                                <option>Bailiffs</option>
+                                <option>Lawyers</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">City</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary transition-colors">
+                                <option>All Cities</option>
+                                <option>Casablanca</option>
+                                <option>Rabat</option>
+                                <option>Marrakech</option>
+                                <option>Fès</option>
+                                <option>Tangier</option>
+                                <option>Agadir</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Service Type</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary transition-colors">
+                                <option>All Services</option>
+                                <option>Constat</option>
+                                <option>Notification</option>
+                                <option>Execution</option>
+                                <option>Legal Consultation</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Language</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary transition-colors">
+                                <option>All Languages</option>
+                                <option>Arabic</option>
+                                <option>French</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Availability</label>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" class="w-5 h-5 text-primary border-2 border-gray-300 rounded focus:ring-primary">
+                                    <span class="text-gray-700">Available Today</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" class="w-5 h-5 text-primary border-2 border-gray-300 rounded focus:ring-primary">
+                                    <span class="text-gray-700">Video Call Available</span>
+                                </label>
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" class="w-5 h-5 text-primary border-2 border-gray-300 rounded focus:ring-primary">
+                                    <span class="text-gray-700">Verified Professionals</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end space-x-4 mt-8 pt-6 border-t border-gray-100">
+                        <button class="px-6 py-3 text-gray-600 font-semibold hover:text-gray-900 transition-colors">
+                            Reset Filters
+                        </button>
+                        <button class="px-8 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors shadow-sm">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="mb-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">How It Works</h2>
+                <p class="text-lg text-gray-600">Simple steps to connect with legal professionals</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="text-3xl text-primary" data-fa-i2svg=""><svg class="svg-inline--fa fa-magnifying-glass" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg></i>
+                    </div>
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">1</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Search</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Find the right professional by name, location, or service type</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="text-3xl text-primary" data-fa-i2svg=""><svg class="svg-inline--fa fa-calendar-check" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calendar-check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zM329 305c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-95 95-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L329 305z"></path></svg></i>
+                    </div>
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">2</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Book</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Schedule an appointment at a time that works for you</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="text-3xl text-primary" data-fa-i2svg=""><svg class="svg-inline--fa fa-credit-card" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="credit-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96v32H576V96c0-35.3-28.7-64-64-64H64zM576 224H0V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V224zM112 352h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16H368c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16z"></path></svg></i>
+                    </div>
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">3</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Pay Securely</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Complete payment through our secure platform</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                        <i class="text-3xl text-primary" data-fa-i2svg=""><svg class="svg-inline--fa fa-video" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="video" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2V384c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1V320 192 174.9l14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"></path></svg></i>
+                    </div>
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">4</div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Consult</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Meet online or in person to get your legal service</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="featured-professionals" class="mb-12">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Featured Professionals</h2>
+                    <p class="text-gray-600">Highly rated and verified legal experts</p>
+                </div>
+                <button class="px-6 py-3 text-primary font-semibold hover:bg-primary/5 rounded-xl transition-colors flex items-center space-x-2">
+                    <span>View All</span>
+                    <i data-fa-i2svg=""><svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path></svg></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-start justify-between mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Professional" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex items-center space-x-1 bg-primary/10 px-3 py-1 rounded-lg">
+                            <i class="text-primary text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-star" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></i>
+                            <span class="font-bold text-primary">4.9</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Ahmed El Amrani</h3>
+                    <p class="text-primary font-semibold mb-3">Certified Bailiff</p>
+                    <div class="flex items-center space-x-2 text-gray-600 mb-3">
+                        <i class="text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg></i>
+                        <span class="text-sm">Casablanca</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">Constat</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">Notification</span>
+                    </div>
+                    <button class="w-full py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors">
+                        View Profile
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-start justify-between mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Professional" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex items-center space-x-1 bg-primary/10 px-3 py-1 rounded-lg">
+                            <i class="text-primary text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-star" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></i>
+                            <span class="font-bold text-primary">5.0</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Fatima Benali</h3>
+                    <p class="text-primary font-semibold mb-3">Certified Bailiff</p>
+                    <div class="flex items-center space-x-2 text-gray-600 mb-3">
+                        <i class="text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg></i>
+                        <span class="text-sm">Rabat</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">Execution</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">Arabic</span>
+                    </div>
+                    <button class="w-full py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors">
+                        View Profile
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-start justify-between mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Professional" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex items-center space-x-1 bg-primary/10 px-3 py-1 rounded-lg">
+                            <i class="text-primary text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-star" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg></i>
+                            <span class="font-bold text-primary">4.8</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1">Karim Tazi</h3>
+                    <p class="text-primary font-semibold mb-3">Certified Lawyer</p>
+                    <div class="flex items-center space-x-2 text-gray-600 mb-3">
+                        <i class="text-sm" data-fa-i2svg=""><svg class="svg-inline--fa fa-location-dot" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-dot" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"></path></svg></i>
+                        <span class="text-sm">Marrakech</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">Consultation</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">French</span>
+                    </div>
+                    <button class="w-full py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="trust-indicators" class="mb-12">
+            <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-3xl p-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-3">Trusted by Thousands</h2>
+                    <p class="text-lg text-gray-600">Join our community of satisfied clients</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-primary mb-2">500+</div>
+                        <p class="text-gray-700 font-medium">Verified Professionals</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-primary mb-2">15K+</div>
+                        <p class="text-gray-700 font-medium">Completed Services</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-primary mb-2">98%</div>
+                        <p class="text-gray-700 font-medium">Satisfaction Rate</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl font-bold text-primary mb-2">24/7</div>
+                        <p class="text-gray-700 font-medium">Customer Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta-section" class="mb-12">
+            <div class="bg-primary rounded-3xl p-12 text-center text-white">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+                    <p class="text-xl text-primary-light mb-8">Create your free account and connect with legal professionals today</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button class="px-8 py-4 bg-white text-primary font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg text-lg">
+                            Sign Up Now
+                        </button>
+                        <button class="px-8 py-4 border-2 border-white text-white font-bold rounded-xl hover:bg-white/10 transition-colors text-lg">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>

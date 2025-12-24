@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Inter', sans-serif; }
+        .autocomplete-item:hover { background-color: #f0fdfa; }
+        .autocomplete-item.active { background-color: #f0fdfa; }
+        .highlight { font-weight: 600; color: #0d9488; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-12">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-scale-balanced text-white text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-gray-900">LegalHub</span>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#" class="text-gray-700 hover:text-teal-600 font-medium transition-colors">Accueil</a>
+                        <a href="#" class="text-teal-600 font-semibold">Rechercher</a>
+                        <a href="#" class="text-gray-700 hover:text-teal-600 font-medium transition-colors">Services</a>
+                        <a href="#" class="text-gray-700 hover:text-teal-600 font-medium transition-colors">À propos</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                        <button class="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-md transition-all">FR</button>
+                        <button class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-all">AR</button>
+                    </div>
+                    <button class="flex items-center space-x-2 text-gray-700 hover:text-teal-600 transition-colors">
+                        <i class="fa-regular fa-user text-lg"></i>
+                        <span class="font-medium">Mon Compte</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-search-page">
+        <section id="hero-search-section" class="bg-gradient-to-br from-teal-50 via-white to-gray-50 py-16">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">Trouvez votre huissier de justice</h1>
+                    <p class="text-lg text-gray-600">Recherchez par nom, spécialité ou ville pour trouver le professionnel certifié qu'il vous faut</p>
+                </div>
+
+                <div id="search-container" class="relative">
+                    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-2">
+                        <div class="flex items-center space-x-3 px-4">
+                            <i class="fa-solid fa-magnifying-glass text-gray-400 text-xl"></i>
+                            <input 
+                                type="text" 
+                                id="search-input" 
+                                class="flex-1 py-4 text-lg text-gray-900 placeholder-gray-400 focus:outline-none" 
+                                placeholder="Nom, spécialité, ou ville..."
+                                autocomplete="off"
+                            >
+                            <button class="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="autocomplete-dropdown" class="absolute w-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden hidden">
+                        <div id="typo-correction" class="px-6 py-3 bg-teal-50 border-b border-teal-100 hidden">
+                            <p class="text-sm text-gray-700">
+                                Affichage des résultats pour <span class="font-semibold text-teal-700" id="corrected-term"></span>
+                            </p>
+                            <p class="text-sm text-gray-600 mt-1">
+                                Vouliez-vous dire <a href="#" class="text-teal-600 hover:text-teal-700 font-medium underline" id="suggestion-term"></a> ?
+                            </p>
+                        </div>
+
+                        <div id="autocomplete-results" class="max-h-96 overflow-y-auto">
+                            <div id="professionals-section" class="py-2">
+                                <div class="px-6 py-2 border-b border-gray-100">
+                                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Professionnels</h3>
+                                </div>
+                                <div id="professionals-list">
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-user text-teal-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900">Maître Ahmed <span class="highlight">Bel</span>kacem</p>
+                                            <p class="text-sm text-gray-500">Casablanca</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-user text-teal-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900">Maître Fatima <span class="highlight">Bel</span>lamy</p>
+                                            <p class="text-sm text-gray-500">Rabat</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-user text-teal-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900">Maître Karim <span class="highlight">Bel</span>haj</p>
+                                            <p class="text-sm text-gray-500">Marrakech</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="specialties-section" class="py-2 border-t border-gray-100">
+                                <div class="px-6 py-2 border-b border-gray-100">
+                                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Spécialités & Services</h3>
+                                </div>
+                                <div id="specialties-list">
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-briefcase text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Constat</span></p>
+                                            <p class="text-sm text-gray-500">Service de constatation officielle</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-briefcase text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Notification</span></p>
+                                            <p class="text-sm text-gray-500">Signification d'actes juridiques</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-briefcase text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Recouvrement</span></p>
+                                            <p class="text-sm text-gray-500">Recouvrement de créances</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="locations-section" class="py-2 border-t border-gray-100">
+                                <div class="px-6 py-2 border-b border-gray-100">
+                                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Villes</h3>
+                                </div>
+                                <div id="locations-list">
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-location-dot text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Casablanca</span></p>
+                                            <p class="text-sm text-gray-500">47 huissiers disponibles</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-location-dot text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Rabat</span></p>
+                                            <p class="text-sm text-gray-500">32 huissiers disponibles</p>
+                                        </div>
+                                    </div>
+                                    <div class="autocomplete-item px-6 py-3 cursor-pointer transition-colors flex items-center space-x-4">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-location-dot text-gray-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-gray-900"><span class="highlight">Salé</span></p>
+                                            <p class="text-sm text-gray-500">18 huissiers disponibles</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="empty-state" class="px-6 py-12 text-center hidden">
+                            <i class="fa-solid fa-magnifying-glass text-gray-300 text-4xl mb-4"></i>
+                            <p class="text-base text-gray-600">Continuez à taper pour rechercher des professionnels ou des services</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <span class="text-sm text-gray-600">Recherches populaires :</span>
+                    <button class="px-4 py-2 bg-white hover:bg-teal-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 transition-all">Constat d'huissier</button>
+                    <button class="px-4 py-2 bg-white hover:bg-teal-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 transition-all">Notification</button>
+                    <button class="px-4 py-2 bg-white hover:bg-teal-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 transition-all">Recouvrement</button>
+                    <button class="px-4 py-2 bg-white hover:bg-teal-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 transition-all">Casablanca</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="search-filters-section" class="py-12 bg-white border-t border-gray-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Affiner votre recherche</h2>
+                    <button class="text-teal-600 hover:text-teal-700 font-medium text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Réinitialiser les filtres</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div id="filter-city">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Ville</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option>Toutes les villes</option>
+                            <option>Casablanca</option>
+                            <option>Rabat</option>
+                            <option>Marrakech</option>
+                            <option>Fès</option>
+                            <option>Tanger</option>
+                        </select>
+                    </div>
+
+                    <div id="filter-specialty">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Spécialité</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option>Toutes les spécialités</option>
+                            <option>Constat</option>
+                            <option>Notification</option>
+                            <option>Recouvrement</option>
+                            <option>Expulsion</option>
+                            <option>Vente aux enchères</option>
+                        </select>
+                    </div>
+
+                    <div id="filter-availability">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Disponibilité</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option>Toutes disponibilités</option>
+                            <option>Aujourd'hui</option>
+                            <option>Cette semaine</option>
+                            <option>Ce mois-ci</option>
+                        </select>
+                    </div>
+
+                    <div id="filter-language">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Langue</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option>Toutes les langues</option>
+                            <option>Français</option>
+                            <option>Arabe</option>
+                            <option>Bilingue (FR/AR)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="search-results-section" class="py-12 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Résultats de recherche</h2>
+                        <p class="text-gray-600 mt-1">147 huissiers certifiés trouvés</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm text-gray-600">Trier par :</span>
+                        <select class="px-4 py-2 border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option>Pertinence</option>
+                            <option>Note client</option>
+                            <option>Disponibilité</option>
+                            <option>Tarif</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div id="result-card-1" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Ahmed Belkacem</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">4.9</span>
+                                        <span class="text-sm text-gray-500">(127)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Casablanca</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>15 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Constat</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Notification</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Recouvrement</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">800 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-card-2" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Fatima Bellamy</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">4.8</span>
+                                        <span class="text-sm text-gray-500">(93)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Rabat</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>12 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Notification</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Expulsion</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Vente aux enchères</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">750 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-card-3" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Karim Belhaj</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">4.7</span>
+                                        <span class="text-sm text-gray-500">(81)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Marrakech</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>10 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Constat</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Recouvrement</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">700 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-card-4" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Samira El Amrani</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">4.9</span>
+                                        <span class="text-sm text-gray-500">(104)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Fès</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>8 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Notification</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Constat</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Recouvrement</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">780 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-card-5" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Youssef Tazi</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">4.8</span>
+                                        <span class="text-sm text-gray-500">(76)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Tanger</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>11 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Expulsion</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Vente aux enchères</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">820 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="result-card-6" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Bailiff" class="w-20 h-20 rounded-full object-cover flex-shrink-0">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-900">Maître Nadia Alaoui</h3>
+                                        <p class="text-sm text-gray-600 mt-1">Huissier de justice certifié</p>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                        <span class="text-sm font-semibold text-gray-900">5.0</span>
+                                        <span class="text-sm text-gray-500">(62)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mt-3 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-teal-600"></i>
+                                        <span>Casablanca</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-teal-600"></i>
+                                        <span>9 ans d'expérience</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2 mt-4">
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Constat</span>
+                                    <span class="px-3 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-full">Notification</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-6">
+                                    <div>
+                                        <p class="text-sm text-gray-600">À partir de</p>
+                                        <p class="text-2xl font-bold text-gray-900">850 DH</p>
+                                    </div>
+                                    <button class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition-all">
+                                        Voir le profil
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-all">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="px-4 py-2 bg-teal-600 text-white font-semibold rounded-lg">1</button>
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all">2</button>
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all">3</button>
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all">4</button>
+                        <span class="px-4 py-2 text-gray-500">...</span>
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-all">12</button>
+                        <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-all">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <section id="search-tips-section" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-3">Conseils pour une recherche efficace</h2>
+                    <p class="text-lg text-gray-600">Optimisez votre recherche pour trouver le bon huissier rapidement</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div id="tip-card-1" class="bg-gradient-to-br from-teal-50 to-white rounded-2xl p-8 border border-teal-100">
+                        <div class="w-14 h-14 bg-teal-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-magnifying-glass text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Soyez précis</h3>
+                        <p class="text-gray-600 leading-relaxed">Utilisez des mots-clés spécifiques comme le type de service ou la ville pour affiner votre recherche et obtenir des résultats pertinents.</p>
+                    </div>
+
+                    <div id="tip-card-2" class="bg-gradient-to-br from-teal-50 to-white rounded-2xl p-8 border border-teal-100">
+                        <div class="w-14 h-14 bg-teal-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-filter text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Utilisez les filtres</h3>
+                        <p class="text-gray-600 leading-relaxed">Affinez vos résultats en utilisant les filtres de ville, spécialité, disponibilité et langue pour trouver le professionnel adapté.</p>
+                    </div>
+
+                    <div id="tip-card-3" class="bg-gradient-to-br from-teal-50 to-white rounded-2xl p-8 border border-teal-100">
+                        <div class="w-14 h-14 bg-teal-600 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-star text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Consultez les avis</h3>
+                        <p class="text-gray-600 leading-relaxed">Lisez les évaluations et commentaires des clients précédents pour choisir un huissier de confiance avec une bonne réputation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-choose-section" class="py-16 bg-gradient-to-br from-gray-50 to-teal-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-3">Pourquoi choisir LegalHub ?</h2>
+                    <p class="text-lg text-gray-600">Une plateforme conçue pour simplifier vos démarches juridiques</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div id="feature-card-1" class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-200">
+                        <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-shield-halved text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Professionnels certifiés</h3>
+                        <p class="text-sm text-gray-600">Tous nos huissiers sont vérifiés et certifiés par les autorités compétentes</p>
+                    </div>
+
+                    <div id="feature-card-2" class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-200">
+                        <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-clock text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Réservation rapide</h3>
+                        <p class="text-sm text-gray-600">Prenez rendez-vous en quelques clics et recevez une confirmation instantanée</p>
+                    </div>
+
+                    <div id="feature-card-3" class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-200">
+                        <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-file-signature text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Signature électronique</h3>
+                        <p class="text-sm text-gray-600">Signez vos documents en ligne de manière sécurisée et conforme à la loi</p>
+                    </div>
+
+                    <div id="feature-card-4" class="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-200">
+                        <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-headset text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Support dédié</h3>
+                        <p class="text-sm text-gray-600">Notre équipe est disponible pour vous accompagner à chaque étape</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta-section" class="py-20 bg-gradient-to-r from-teal-600 to-teal-700">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold text-white mb-4">Prêt à trouver votre huissier ?</h2>
+                <p class="text-xl text-teal-100 mb-8">Commencez votre recherche maintenant et réservez votre consultation en ligne</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button class="px-8 py-4 bg-white text-teal-600 font-bold rounded-xl hover:bg-gray-50 transition-all shadow-lg">
+                        Rechercher un huissier
+                    </button>
+                    <button class="px-8 py-4 bg-teal-500 text-white font-bold rounded-xl hover:bg-teal-400 transition-all border-2 border-white">
+                        Créer un compte
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div id="footer-brand">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-teal-600 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-scale-balanced text-white text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">LegalHub</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">La plateforme de référence pour trouver et consulter des huissiers de justice certifiés au Maroc.</p>
+                </div>
+
+                <div id="footer-links-1">
+                    <h3 class="text-white font-bold mb-4">Liens rapides</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Accueil</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Rechercher</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Services</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">À propos</a></li>
+                    </ul>
+                </div>
+
+                <div id="footer-links-2">
+                    <h3 class="text-white font-bold mb-4">Ressources</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Centre d'aide</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="hover:text-teal-400 transition-colors">Confidentialité</a></li>
+                    </ul>
+                </div>
+
+                <div id="footer-contact">
+                    <h3 class="text-white font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-envelope text-teal-400"></i>
+                            <span>contact@legalhub.ma</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-teal-400"></i>
+                            <span>+212 5XX-XXXXXX</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-teal-400"></i>
+                            <span>Casablanca, Maroc</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between">
+                <p class="text-sm text-gray-500">© 2024 LegalHub. Tous droits réservés.</p>
+                <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-facebook-f text-gray-300"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-twitter text-gray-300"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-linkedin-in text-gray-300"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all">
+                        <i class="fa-brands fa-instagram text-gray-300"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', function() {
+            const searchInput = document.getElementById('search-input');
+            const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+            const autocompleteResults = document.getElementById('autocomplete-results');
+            const emptyState = document.getElementById('empty-state');
+            const typoCorrection = document.getElementById('typo-correction');
+            let activeIndex = -1;
+            let autocompleteItems = [];
+
+            searchInput.addEventListener('input', function(e) {
+                const value = e.target.value.trim();
+                
+                if (value.length >= 2) {
+                    autocompleteDropdown.classList.remove('hidden');
+                    emptyState.classList.add('hidden');
+                    autocompleteResults.classList.remove('hidden');
+                    
+                    if (value.toLowerCase().includes('notif') && !value.toLowerCase().includes('notification')) {
+                        typoCorrection.classList.remove('hidden');
+                        document.getElementById('corrected-term').textContent = 'Notification';
+                        document.getElementById('suggestion-term').textContent = 'Notification';
+                    } else {
+                        typoCorrection.classList.add('hidden');
+                    }
+                    
+                    autocompleteItems = document.querySelectorAll('.autocomplete-item');
+                    activeIndex = -1;
+                } else if (value.length === 1) {
+                    autocompleteDropdown.classList.remove('hidden');
+                    emptyState.classList.remove('hidden');
+                    autocompleteResults.classList.add('hidden');
+                    typoCorrection.classList.add('hidden');
+                } else {
+                    autocompleteDropdown.classList.add('hidden');
+                }
+            });
+
+            searchInput.addEventListener('keydown', function(e) {
+                if (!autocompleteDropdown.classList.contains('hidden') && !autocompleteResults.classList.contains('hidden')) {
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        activeIndex = (activeIndex + 1) % autocompleteItems.length;
+                        updateActiveItem();
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        activeIndex = activeIndex <= 0 ? autocompleteItems.length - 1 : activeIndex - 1;
+                        updateActiveItem();
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (activeIndex >= 0 && activeIndex < autocompleteItems.length) {
+                            autocompleteItems[activeIndex].click();
+                        }
+                    } else if (e.key === 'Escape') {
+                        autocompleteDropdown.classList.add('hidden');
+                        activeIndex = -1;
+                    }
+                }
+            });
+
+            function updateActiveItem() {
+                autocompleteItems.forEach((item, index) => {
+                    if (index === activeIndex) {
+                        item.classList.add('active');
+                        item.scrollIntoView({ block: 'nearest' });
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+                    autocompleteDropdown.classList.add('hidden');
+                    activeIndex = -1;
+                }
+            });
+
+            document.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const text = this.querySelector('p').textContent;
+                    searchInput.value = text;
+                    autocompleteDropdown.classList.add('hidden');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

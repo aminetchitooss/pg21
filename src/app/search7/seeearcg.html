@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Professionals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0d9488',
+                        'primary-dark': '#0f766e',
+                        'primary-light': '#5eead4',
+                        'gray-50': '#f9fafb',
+                        'gray-100': '#f3f4f6',
+                        'gray-200': '#e5e7eb',
+                        'gray-300': '#d1d5db',
+                        'gray-600': '#4b5563',
+                        'gray-700': '#374151',
+                        'gray-800': '#1f2937',
+                        'gray-900': '#111827',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+
+<header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-scale-balanced text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gray-900">LegalHub</span>
+                </div>
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">Home</a>
+                    <a href="#" class="text-primary font-semibold">Search</a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">Services</a>
+                    <a href="#" class="text-gray-700 hover:text-primary font-medium transition-colors">About</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                    <button class="px-4 py-2 bg-white rounded-md text-gray-900 font-medium text-sm shadow-sm">FR</button>
+                    <button class="px-4 py-2 text-gray-600 font-medium text-sm">AR</button>
+                </div>
+                <button class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-primary transition-colors">
+                    <i class="fa-regular fa-user text-lg"></i>
+                    <span class="font-medium">Account</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="main-content" class="max-w-7xl mx-auto px-6 py-8">
+    
+    <section id="search-header" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8 sticky top-24 z-40">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Find Your Legal Professional</h1>
+            <p class="text-gray-600 text-lg">Search for certified bailiffs and lawyers by name, service, or specialty</p>
+        </div>
+        
+        <div id="search-container" class="flex flex-col md:flex-row gap-4 items-stretch">
+            <div class="flex-1 relative">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search by name, service, or specialty (e.g. 'constat', 'notification')"
+                        class="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all"
+                    />
+                    <div id="search-loading" class="hidden absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <i class="fa-solid fa-spinner fa-spin text-primary text-xl"></i>
+                    </div>
+                </div>
+                
+                <div id="autocomplete-dropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-white border-2 border-gray-200 rounded-xl shadow-xl max-h-80 overflow-y-auto z-50">
+                    <div class="p-2">
+                        <div class="autocomplete-item px-4 py-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-file-contract text-primary"></i>
+                                <span class="text-gray-900 font-medium"><mark class="bg-yellow-200">Constat</mark></span>
+                            </div>
+                            <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Service</span>
+                        </div>
+                        <div class="autocomplete-item px-4 py-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-bell text-primary"></i>
+                                <span class="text-gray-900 font-medium">Notification judiciaire</span>
+                            </div>
+                            <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Service</span>
+                        </div>
+                        <div class="autocomplete-item px-4 py-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-user text-primary"></i>
+                                <span class="text-gray-900 font-medium">Ahmed Benali</span>
+                            </div>
+                            <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Professional</span>
+                        </div>
+                        <div class="autocomplete-item px-4 py-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-gavel text-primary"></i>
+                                <span class="text-gray-900 font-medium">Exécution de jugement</span>
+                            </div>
+                            <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Specialty</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:w-72 relative">
+                <i class="fa-solid fa-location-dot absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg z-10"></i>
+                <select 
+                    id="city-selector" 
+                    class="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 transition-all appearance-none bg-white cursor-pointer"
+                >
+                    <option value="">Select City</option>
+                    <optgroup label="Popular Cities">
+                        <option value="casablanca">Casablanca</option>
+                        <option value="rabat">Rabat</option>
+                        <option value="marrakech">Marrakech</option>
+                        <option value="fes">Fès</option>
+                        <option value="tangier">Tangier</option>
+                    </optgroup>
+                    <optgroup label="Other Cities">
+                        <option value="agadir">Agadir</option>
+                        <option value="meknes">Meknès</option>
+                        <option value="oujda">Oujda</option>
+                        <option value="kenitra">Kénitra</option>
+                        <option value="tetouan">Tétouan</option>
+                    </optgroup>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            </div>
+            
+            <button 
+                id="search-button" 
+                disabled
+                class="md:w-40 px-8 py-4 bg-gray-300 text-white font-semibold text-lg rounded-xl transition-all cursor-not-allowed"
+            >
+                Search
+            </button>
+        </div>
+        
+        <div id="search-status" class="hidden mt-4 flex items-center space-x-2 text-gray-600">
+            <i class="fa-solid fa-spinner fa-spin text-primary"></i>
+            <span>Searching professionals in <span id="search-city-name" class="font-semibold">Casablanca</span>...</span>
+        </div>
+    </section>
+
+    <section id="quick-actions" class="mb-8">
+        <div class="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Popular Searches</h3>
+            <div class="flex flex-wrap gap-3">
+                <button class="px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-file-contract mr-2"></i>Constat
+                </button>
+                <button class="px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-bell mr-2"></i>Notification
+                </button>
+                <button class="px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-location-dot mr-2"></i>Casablanca
+                </button>
+                <button class="px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-location-dot mr-2"></i>Rabat
+                </button>
+                <button class="px-5 py-2.5 bg-white border-2 border-primary/30 text-primary font-medium rounded-xl hover:bg-primary hover:text-white transition-all shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-gavel mr-2"></i>Exécution
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="empty-state" class="text-center py-20">
+        <div class="max-w-xl mx-auto">
+            <div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-magnifying-glass text-primary text-5xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Start by searching for a professional</h2>
+            <p class="text-xl text-gray-600 mb-8">Enter a service, name, or specialty and select a city to find the perfect legal professional for your needs.</p>
+            <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+                <p class="text-gray-700 font-medium mb-4">Try these popular options:</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium">🔹 Constat</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium">🔹 Notification</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium">🔹 Casablanca</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-lg font-medium">🔹 Rabat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="loading-state" class="hidden">
+        <div class="grid grid-cols-1 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 animate-pulse">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gray-200 rounded-xl"></div>
+                    <div class="flex-1">
+                        <div class="h-7 bg-gray-200 rounded-lg w-1/3 mb-3"></div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-1/4 mb-4"></div>
+                        <div class="flex gap-2 mb-4">
+                            <div class="h-8 bg-gray-200 rounded-lg w-24"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-32"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-28"></div>
+                        </div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-2/3"></div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 animate-pulse">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gray-200 rounded-xl"></div>
+                    <div class="flex-1">
+                        <div class="h-7 bg-gray-200 rounded-lg w-1/3 mb-3"></div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-1/4 mb-4"></div>
+                        <div class="flex gap-2 mb-4">
+                            <div class="h-8 bg-gray-200 rounded-lg w-24"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-32"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-28"></div>
+                        </div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-2/3"></div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 animate-pulse">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gray-200 rounded-xl"></div>
+                    <div class="flex-1">
+                        <div class="h-7 bg-gray-200 rounded-lg w-1/3 mb-3"></div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-1/4 mb-4"></div>
+                        <div class="flex gap-2 mb-4">
+                            <div class="h-8 bg-gray-200 rounded-lg w-24"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-32"></div>
+                            <div class="h-8 bg-gray-200 rounded-lg w-28"></div>
+                        </div>
+                        <div class="h-5 bg-gray-200 rounded-lg w-2/3"></div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                        <div class="h-12 bg-gray-200 rounded-xl w-40"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results-section" class="hidden">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Search Results</h2>
+                <p class="text-gray-600 mt-1"><span id="results-count" class="font-semibold">12</span> professionals found in <span id="results-city" class="font-semibold">Casablanca</span></p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <label class="text-gray-700 font-medium">Sort by:</label>
+                <select class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    <option>Relevance</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Rating</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="results-list" class="grid grid-cols-1 gap-6">
+            
+            <div class="professional-card bg-white rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-3xl font-bold">AB</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Ahmed <mark class="bg-yellow-200">Benali</mark></h3>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary font-semibold rounded-lg text-sm">Bailiff</span>
+                                    <span class="flex items-center text-gray-600">
+                                        <i class="fa-solid fa-location-dot text-primary mr-2"></i>
+                                        <span class="font-medium">Casablanca</span>
+                                    </span>
+                                    <span class="flex items-center text-yellow-500">
+                                        <i class="fa-solid fa-star mr-1"></i>
+                                        <span class="font-semibold text-gray-900">4.8</span>
+                                        <span class="text-gray-500 ml-1">(127 reviews)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 mt-4">
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-file-contract text-primary mr-1"></i>Constat
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-bell text-primary mr-1"></i>Notification judiciaire
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-gavel text-primary mr-1"></i>Exécution
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-language text-primary mr-2"></i>
+                                <span class="font-medium">French, Arabic</span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-clock text-primary mr-2"></i>
+                                <span class="font-medium">Available today</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2">Starting from</span>
+                            <span class="text-2xl font-bold text-primary">500 MAD</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-user mr-2"></i>View Profile
+                        </button>
+                        <button class="px-6 py-3 bg-white border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-all">
+                            <i class="fa-regular fa-calendar mr-2"></i>Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="professional-card bg-white rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-3xl font-bold">SK</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Sarah Khalil</h3>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary font-semibold rounded-lg text-sm">Bailiff</span>
+                                    <span class="flex items-center text-gray-600">
+                                        <i class="fa-solid fa-location-dot text-primary mr-2"></i>
+                                        <span class="font-medium">Casablanca</span>
+                                    </span>
+                                    <span class="flex items-center text-yellow-500">
+                                        <i class="fa-solid fa-star mr-1"></i>
+                                        <span class="font-semibold text-gray-900">4.9</span>
+                                        <span class="text-gray-500 ml-1">(89 reviews)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 mt-4">
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-file-contract text-primary mr-1"></i>Constat
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-handshake text-primary mr-1"></i>Recouvrement
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-file-invoice text-primary mr-1"></i>Procès-verbal
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-language text-primary mr-2"></i>
+                                <span class="font-medium">French, Arabic, English</span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-clock text-primary mr-2"></i>
+                                <span class="font-medium">Available tomorrow</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2">Starting from</span>
+                            <span class="text-2xl font-bold text-primary">600 MAD</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-user mr-2"></i>View Profile
+                        </button>
+                        <button class="px-6 py-3 bg-white border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-all">
+                            <i class="fa-regular fa-calendar mr-2"></i>Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="professional-card bg-white rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-3xl font-bold">YM</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Youssef Mansouri</h3>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary font-semibold rounded-lg text-sm">Bailiff</span>
+                                    <span class="flex items-center text-gray-600">
+                                        <i class="fa-solid fa-location-dot text-primary mr-2"></i>
+                                        <span class="font-medium">Casablanca</span>
+                                    </span>
+                                    <span class="flex items-center text-yellow-500">
+                                        <i class="fa-solid fa-star mr-1"></i>
+                                        <span class="font-semibold text-gray-900">4.7</span>
+                                        <span class="text-gray-500 ml-1">(156 reviews)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 mt-4">
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-bell text-primary mr-1"></i>Notification judiciaire
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-gavel text-primary mr-1"></i>Exécution
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-file-contract text-primary mr-1"></i>Constat
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-language text-primary mr-2"></i>
+                                <span class="font-medium">French, Arabic</span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-clock text-primary mr-2"></i>
+                                <span class="font-medium">Available today</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2">Starting from</span>
+                            <span class="text-2xl font-bold text-primary">550 MAD</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-user mr-2"></i>View Profile
+                        </button>
+                        <button class="px-6 py-3 bg-white border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-all">
+                            <i class="fa-regular fa-calendar mr-2"></i>Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="professional-card bg-white rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-3xl font-bold">LA</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Leila Alami</h3>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary font-semibold rounded-lg text-sm">Bailiff</span>
+                                    <span class="flex items-center text-gray-600">
+                                        <i class="fa-solid fa-location-dot text-primary mr-2"></i>
+                                        <span class="font-medium">Casablanca</span>
+                                    </span>
+                                    <span class="flex items-center text-yellow-500">
+                                        <i class="fa-solid fa-star mr-1"></i>
+                                        <span class="font-semibold text-gray-900">5.0</span>
+                                        <span class="text-gray-500 ml-1">(43 reviews)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 mt-4">
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-file-contract text-primary mr-1"></i>Constat
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-scale-balanced text-primary mr-1"></i>Droit commercial
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-building text-primary mr-1"></i>Droit immobilier
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-language text-primary mr-2"></i>
+                                <span class="font-medium">French, Arabic, English</span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-clock text-primary mr-2"></i>
+                                <span class="font-medium">Available today</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2">Starting from</span>
+                            <span class="text-2xl font-bold text-primary">700 MAD</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-user mr-2"></i>View Profile
+                        </button>
+                        <button class="px-6 py-3 bg-white border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-all">
+                            <i class="fa-regular fa-calendar mr-2"></i>Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="professional-card bg-white rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                <div class="flex items-start space-x-6">
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-3xl font-bold">OE</span>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-900">Omar El Fassi</h3>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <span class="px-3 py-1 bg-primary/10 text-primary font-semibold rounded-lg text-sm">Bailiff</span>
+                                    <span class="flex items-center text-gray-600">
+                                        <i class="fa-solid fa-location-dot text-primary mr-2"></i>
+                                        <span class="font-medium">Casablanca</span>
+                                    </span>
+                                    <span class="flex items-center text-yellow-500">
+                                        <i class="fa-solid fa-star mr-1"></i>
+                                        <span class="font-semibold text-gray-900">4.6</span>
+                                        <span class="text-gray-500 ml-1">(98 reviews)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4 mt-4">
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-bell text-primary mr-1"></i>Notification judiciaire
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-handshake text-primary mr-1"></i>Recouvrement
+                            </span>
+                            <span class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-gavel text-primary mr-1"></i>Exécution
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-gray-600 mb-4">
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-language text-primary mr-2"></i>
+                                <span class="font-medium">French, Arabic</span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fa-solid fa-clock text-primary mr-2"></i>
+                                <span class="font-medium">Available this week</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-gray-600 mr-2">Starting from</span>
+                            <span class="text-2xl font-bold text-primary">580 MAD</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <button class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-regular fa-user mr-2"></i>View Profile
+                        </button>
+                        <button class="px-6 py-3 bg-white border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-all">
+                            <i class="fa-regular fa-calendar mr-2"></i>Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-8 flex justify-center">
+            <nav class="flex items-center space-x-2">
+                <button class="px-4 py-2 border-2 border-gray-300 rounded-lg text-gray-600 hover:border-primary hover:text-primary transition-all">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="px-4 py-2 bg-primary text-white font-semibold rounded-lg">1</button>
+                <button class="px-4 py-2 border-2 border-gray-300 rounded-lg text-gray-700 hover:border-primary hover:text-primary transition-all">2</button>
+                <button class="px-4 py-2 border-2 border-gray-300 rounded-lg text-gray-700 hover:border-primary hover:text-primary transition-all">3</button>
+                <button class="px-4 py-2 border-2 border-gray-300 rounded-lg text-gray-700 hover:border-primary hover:text-primary transition-all">4</button>
+                <button class="px-4 py-2 border-2 border-gray-300 rounded-lg text-gray-600 hover:border-primary hover:text-primary transition-all">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </nav>
+        </div>
+    </section>
+
+</main>
+
+<section id="help-section" class="bg-gradient-to-br from-primary/5 to-primary/10 py-16 mt-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-2xl p-8 border border-primary/20 text-center">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-shield-halved text-primary text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Verified Professionals</h3>
+                <p class="text-gray-600">All bailiffs and lawyers are certified and verified by legal authorities</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-primary/20 text-center">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-headset text-primary text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">24/7 Support</h3>
+                <p class="text-gray-600">Our customer support team is available around the clock to help you</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-primary/20 text-center">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-lock text-primary text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3">Secure Payment</h3>
+                <p class="text-gray-600">All transactions are encrypted and processed securely</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="footer" class="bg-gray-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-scale-balanced text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold">LegalHub</span>
+                </div>
+                <p class="text-gray-400">Connecting you with certified legal professionals across Morocco</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Search</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Services</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">For Professionals</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Register</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Dashboard</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Resources</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4">Contact</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-solid fa-envelope text-primary"></i>
+                        <span>contact@legalhub.ma</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-solid fa-phone text-primary"></i>
+                        <span>+212 5XX-XXXXXX</span>
+                    </li>
+                    <li class="flex items-center space-x-2">
+                        <i class="fa-solid fa-location-dot text-primary"></i>
+                        <span>Casablanca, Morocco</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400 mb-4 md:mb-0">&copy; 2024 LegalHub. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-primary transition-colors">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+window.addEventListener('load', function() {
+    const searchInput = document.getElementById('search-input');
+    const citySelector = document.getElementById('city-selector');
+    const searchButton = document.getElementById('search-button');
+    const autocompleteDropdown = document.getElementById('autocomplete-dropdown');
+    const searchLoading = document.getElementById('search-loading');
+    const searchStatus = document.getElementById('search-status');
+    const emptyState = document.getElementById('empty-state');
+    const loadingState = document.getElementById('loading-state');
+    const resultsSection = document.getElementById('results-section');
+    const quickActions = document.getElementById('quick-actions');
+    
+    function updateSearchButton() {
+        if (searchInput.value.trim() !== '' || citySelector.value !== '') {
+            searchButton.disabled = false;
+            searchButton.classList.remove('bg-gray-300', 'cursor-not-allowed');
+            searchButton.classList.add('bg-primary', 'hover:bg-primary-dark', 'cursor-pointer', 'shadow-md', 'hover:shadow-lg');
+        } else {
+            searchButton.disabled = true;
+            searchButton.classList.add('bg-gray-300', 'cursor-not-allowed');
+            searchButton.classList.remove('bg-primary', 'hover:bg-primary-dark', 'cursor-pointer', 'shadow-md', 'hover:shadow-lg');
+        }
+    }
+    
+    let typingTimer;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(typingTimer);
+        updateSearchButton();
+        
+        if (this.value.trim().length > 1) {
+            searchLoading.classList.remove('hidden');
+            typingTimer = setTimeout(function() {
+                searchLoading.classList.add('hidden');
+                autocompleteDropdown.classList.remove('hidden');
+            }, 500);
+        } else {
+            autocompleteDropdown.classList.add('hidden');
+            searchLoading.classList.add('hidden');
+        }
+    });
+    
+    citySelector.addEventListener('change', function() {
+        updateSearchButton();
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+            autocompleteDropdown.classList.add('hidden');
+        }
+    });
+    
+    const autocompleteItems = document.querySelectorAll('.autocomplete-item');
+    autocompleteItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const text = this.querySelector('span').textContent;
+            searchInput.value = text;
+            autocompleteDropdown.classList.add('hidden');
+            updateSearchButton();
+        });
+    });
+    
+    searchButton.addEventListener('click', function() {
+        if (!this.disabled) {
+            emptyState.classList.add('hidden');
+            quickActions.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+            
+            const cityName = citySelector.options[citySelector.selectedIndex].text;
+            document.getElementById('search-city-name').textContent = cityName;
+            searchStatus.classList.remove('hidden');
+            
+            setTimeout(function() {
+                loadingState.classList.add('hidden');
+                searchStatus.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                document.getElementById('results-city').textContent = cityName;
+            }, 1500);
+        }
+    });
+    
+    const quickActionButtons = document.querySelectorAll('#quick-actions button');
+    quickActionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const text = this.textContent.trim();
+            if (text.includes('Casablanca') || text.includes('Rabat')) {
+                const cities = {'Casablanca': 'casablanca', 'Rabat': 'rabat'};
+                for (let city in cities) {
+                    if (text.includes(city)) {
+                        citySelector.value = cities[city];
+                        break;
+                    }
+                }
+            } else {
+                searchInput.value = text.replace(/[^\w\s]/gi, '').trim();
+            }
+            updateSearchButton();
+            searchInput.focus();
+        });
+    });
+});
+</script>
+
+</body>
+</html>
