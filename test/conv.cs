@@ -89,4 +89,27 @@ public static class ReportParamsExtractor
                 return ((JValue)token).Value;
         }
     }
+
+    private static string santi()
+    {
+       
+
+string input =
+"DateToTenor(REPORT_DATE, Security.MaturityDateUsed, [(3.5, 'SCHATZ (0-3.5Y)'), (7.25, 'BOBL (3.5Y-7.25Y)'), (19.5, 'BUND (7.25Y-19.5Y)'), (1000, 'BUXL (19.5Y+)')])";
+
+string result = Regex.Replace(input, @"'([^']*)'", m =>
+{
+    // m.Value includes the surrounding single quotes, e.g. 'SCHATZ (0-3.5Y)'
+    string inner = m.Groups[1].Value;
+
+    // Remove parentheses but keep their content
+    inner = Regex.Replace(inner, @"\s*\(([^)]*)\)", " $1");
+
+    // Re-wrap in quotes
+    return "'" + inner + "'";
+});
+
+System.Console.WriteLine(result);
+
+    }
 }
